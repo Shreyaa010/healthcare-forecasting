@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthcare Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 85%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .kpis {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .kpi {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        button {
+    padding: 8px 15px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+button:hover {
+    background-color: #27ae60;
+}
+ </style>
+</head>
+
+<body>
+
+<h1>📊 Healthcare Forecasting Dashboard</h1>
+
+<div class="card kpis">
+    <div class="kpi">Latest: {{ latest }}</div>
+    <div class="kpi">Average: {{ avg_val }}</div>
+    <div class="kpi">Max: {{ max_val }}</div>
+</div>
+
+<div class="card">
+    <form method="GET">
+        Start Date: <input type="date" name="start" value="{{ start }}">
+        End Date: <input type="date" name="end" value="{{ end }}">
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>📈 Forecast Graph</h2>
+    <img src="{{ url_for('static', filename='graph.png') }}" width="700">
+</div>
+
+<div class="card">
+    <h2>📋 Latest Data</h2>
+    {{ table | safe }}
+</div>
+
+<div class="card">
+    <h2>🔮 Prediction</h2>
+    {{ pred_table | safe }}
+</div>
+
+<div style="margin-top:10px;">
+    <a href="/download?start={{ start }}&end={{ end }}">
+        <button>📥 Download Filtered Data</button>
+    </a>
+</div>
+
+</body>
+</html>
